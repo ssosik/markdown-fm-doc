@@ -4,7 +4,6 @@ use eyre::{eyre, Result};
 use serde::{de, Deserialize, Deserializer, Serialize};
 use std::io::{Error, ErrorKind};
 use std::{fmt, fs, io, marker::PhantomData};
-use uuid::Uuid;
 use yaml_rust::YamlEmitter;
 
 /// Representation for a given Markdown + FrontMatter file; Example:
@@ -20,10 +19,6 @@ use yaml_rust::YamlEmitter;
 ///
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
 pub struct Document {
-    /// Inherent metadata about the document
-    #[serde(default)]
-    pub id: String,
-
     /// FrontMatter-derived metadata about the document
     #[serde(default)]
     pub author: String,
@@ -46,7 +41,6 @@ pub struct Document {
 impl Document {
     pub fn new() -> Self {
         Document {
-            id: String::from(""),
             author: String::from(""),
             date: String::from(""),
             tags: vec![],
@@ -122,15 +116,7 @@ pub fn parse_file(path: &std::path::PathBuf) -> Result<Document, io::Error> {
 
             let mut doc: Document = serde_yaml::from_str(&out_str).unwrap();
 
-            //let mut t = doc.title.clone();
-            //// Allowed fields in meilisearch DocumentID:
-            //// https://docs.meilisearch.com/learn/core_concepts/documents.html#primary-field
-            //t.retain(|c| {
-            //    r#"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_"#.contains(c)
-            //});
-            //doc.id = t;
-
-            doc.id = Uuid::new_v4().to_hyphenated().to_string();
+            //doc.id = Uuid::new_v4().to_hyphenated().to_string();
             doc.body = content.to_string();
 
             Ok(doc)
