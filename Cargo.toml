@@ -1,0 +1,17 @@
+[package]
+name = "markdown-fm-doc"
+version = "0.1.0"
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+chrono = "0.4"
+color-eyre = "0.5.11"
+eyre = "0.6.5"
+frontmatter = "0.4.0"
+serde = { version = "1.0.115", features = ["derive"] }
+serde_json = "1.0.57"
+serde_yaml = "0.8.13"
+uuid = { version = "0.8", features = ["v4", "serde"] }
+yaml-rust = "0.4"
