@@ -19,7 +19,7 @@ use yaml_rust::YamlEmitter;
 /// Some note here formatted with Markdown syntax
 ///
 #[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
-pub struct XqDocument {
+pub struct Document {
     /// Inherent metadata about the document
     #[serde(default)]
     pub id: String,
@@ -43,9 +43,9 @@ pub struct XqDocument {
     pub body: String,
 }
 
-impl XqDocument {
+impl Document {
     pub fn new() -> Self {
-        XqDocument {
+        Document {
             id: String::from(""),
             author: String::from(""),
             date: String::from(""),
@@ -107,7 +107,7 @@ where
     deserializer.deserialize_any(StringOrVec(PhantomData))
 }
 
-pub fn parse_file(path: &std::path::PathBuf) -> Result<XqDocument, io::Error> {
+pub fn parse_file(path: &std::path::PathBuf) -> Result<Document, io::Error> {
     let full_path = path.to_str().unwrap();
     let s = fs::read_to_string(full_path)?;
 
@@ -120,7 +120,7 @@ pub fn parse_file(path: &std::path::PathBuf) -> Result<XqDocument, io::Error> {
                 emitter.dump(&yaml).unwrap(); // dump the YAML object to a String
             }
 
-            let mut doc: XqDocument = serde_yaml::from_str(&out_str).unwrap();
+            let mut doc: Document = serde_yaml::from_str(&out_str).unwrap();
 
             //let mut t = doc.title.clone();
             //// Allowed fields in meilisearch DocumentID:
