@@ -112,8 +112,7 @@ pub fn parse_file(path: &std::path::PathBuf) -> Result<Document, io::Error> {
             }
 
             let mut doc: Document = serde_yaml::from_str(&out_str).unwrap();
-
-            //doc.id = Uuid::new_v4().to_hyphenated().to_string();
+            doc.filename = String::from(path.file_name().unwrap().to_str().unwrap());
             doc.body = content.to_string();
 
             Ok(doc)
