@@ -17,8 +17,10 @@ use yaml_rust::YamlEmitter;
 ///
 /// Some note here formatted with Markdown syntax
 ///
-#[derive(Clone, Debug, PartialEq, Serialize, Deserialize)]
+#[derive(Clone, Debug, Default, PartialEq, Serialize, Deserialize)]
 pub struct Document {
+    #[serde(default)]
+    pub filename: String,
     /// FrontMatter-derived metadata about the document
     #[serde(default)]
     pub author: String,
@@ -41,12 +43,7 @@ pub struct Document {
 impl Document {
     pub fn new() -> Self {
         Document {
-            author: String::from(""),
-            date: String::from(""),
-            tags: vec![],
-            title: String::from(""),
-            subtitle: String::from(""),
-            body: String::from(""),
+            ..Default::default()
         }
     }
 
